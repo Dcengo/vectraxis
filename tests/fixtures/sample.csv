@@ -1,0 +1,4 @@
+task_id,assignee,status,duration_hours,description
+TASK-001,Alice,completed,4.5,Implement login page
+TASK-002,Bob,in_progress,2.0,Fix search bug
+TASK-003,Alice,blocked,8.0,Database migration

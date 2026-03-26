@@ -1,0 +1,34 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: vectraxis
+      POSTGRES_PASSWORD: vectraxis
+      POSTGRES_DB: vectraxis
+    ports:
+      - "4343:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vectraxis"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../.env
+    environment:
+      VECTRAXIS_DATABASE_URL: postgresql+asyncpg://vectraxis:vectraxis@db:5432/vectraxis
+      VECTRAXIS_LOG_LEVEL: INFO
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

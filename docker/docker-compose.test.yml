@@ -1,0 +1,25 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: vectraxis
+      POSTGRES_PASSWORD: vectraxis
+      POSTGRES_DB: vectraxis_test
+    ports:
+      - "4344:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vectraxis"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      VECTRAXIS_DATABASE_URL: postgresql+asyncpg://vectraxis:vectraxis@db:5432/vectraxis_test
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["python", "-m", "pytest", "tests/", "-v", "--tb=short"]
