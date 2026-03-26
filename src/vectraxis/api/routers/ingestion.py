@@ -55,8 +55,7 @@ async def upload_data(file: UploadFile) -> IngestResponse:
         raise HTTPException(
             status_code=400,
             detail=(
-                f"Unsupported file type: {ext}. "
-                f"Supported: {list(EXTENSION_MAP.keys())}"
+                f"Unsupported file type: {ext}. Supported: {list(EXTENSION_MAP.keys())}"
             ),
         )
 
@@ -106,7 +105,6 @@ async def upload_data(file: UploadFile) -> IngestResponse:
         source_id=source_id,
         records_count=len(raw_records),
         message=(
-            f"File '{file.filename}' processed: "
-            f"{len(raw_records)} records ingested"
+            f"File '{file.filename}' processed: {len(raw_records)} records ingested"
         ),
     )

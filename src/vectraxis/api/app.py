@@ -98,9 +98,7 @@ def create_app() -> FastAPI:
         models.providers_router, prefix="/api/v1/providers", tags=["Providers"]
     )
     app.include_router(prompts.router, prefix="/api/v1/prompts", tags=["Prompts"])
-    app.include_router(
-        workflows.router, prefix="/api/v1/workflows", tags=["Workflows"]
-    )
+    app.include_router(workflows.router, prefix="/api/v1/workflows", tags=["Workflows"])
 
     @app.get("/scalar", response_class=HTMLResponse, include_in_schema=False)
     async def scalar_docs() -> str:

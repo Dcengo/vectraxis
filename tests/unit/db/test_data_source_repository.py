@@ -9,9 +9,7 @@ from vectraxis.db.repositories.data_source import (
 from vectraxis.models.ingestion import DataSource, DataSourceType
 
 
-def _make_source(
-    source_id: str = "ds-1", name: str = "test.csv"
-) -> DataSource:
+def _make_source(source_id: str = "ds-1", name: str = "test.csv") -> DataSource:
     return DataSource(
         id=source_id,
         name=name,

@@ -109,13 +109,11 @@ class PostgresWorkflowRepository:
             if value is not None:
                 if key == "nodes" and isinstance(value, list):
                     row.nodes = [
-                        n.model_dump() if hasattr(n, "model_dump") else n
-                        for n in value
+                        n.model_dump() if hasattr(n, "model_dump") else n for n in value
                     ]
                 elif key == "edges" and isinstance(value, list):
                     row.edges = [
-                        e.model_dump() if hasattr(e, "model_dump") else e
-                        for e in value
+                        e.model_dump() if hasattr(e, "model_dump") else e for e in value
                     ]
                 elif hasattr(row, key):
                     setattr(row, key, value)
